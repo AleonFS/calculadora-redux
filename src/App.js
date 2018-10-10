@@ -73,7 +73,6 @@ class App extends Component {
 		const operatorsIds = ['plus','subs','mul'];
 		return (
 			<div>
-				<img src={logo} alt=""/>
 				<div className="row">
 					<input style={inputStyle} type="text" value={this.state.numA}
 					       onChange={(e) => this.onChangeA(e.target.value)}/>
