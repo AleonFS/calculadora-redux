@@ -1,3 +1,5 @@
+import {initialState} from "./index";
+
 export const clear = () => ({
 	type: "CLEAR"
 });
@@ -26,6 +28,10 @@ export const updateInput2 = numberString => ({
 	number: numberString
 });
 
+export const changeSymbol = () => ({
+	type: 'CHANGE_SYMBOL'
+});
+
 
 function calculate(input1, input2, operator) {
 	let numA = parseInt(input1);
@@ -39,15 +45,17 @@ function calculate(input1, input2, operator) {
 			return numA * numB;
 		case '/':
 			return numA / numB;
+		case '%':
+			return numA % numB;
 		default:
 			return 0;
 	}
 }
 
-export const calculatorReducer = (state = {}, action) => {
+export const calculatorReducer = (state, action) => {
 	switch (action.type) {
 		case "CLEAR":
-			return {};
+			return initialState;
 		case "UPDATE_INPUT_1":
 			return {...state, input1: action.number};
 		case "UPDATE_INPUT_2":
@@ -59,6 +67,12 @@ export const calculatorReducer = (state = {}, action) => {
 				return {...state, input2: (state.input2?state.input2:"") + action.num};
 			} else {
 				return {...state, input1: (state.input1 ? state.input1:"") + action.num};
+			}
+		case "CHANGE_SYMBOL":
+			if (state.operator) {
+				return {...state, input2: (state.input2? parseInt(state.input2)*-1:"").toString()};
+			} else {
+				return {...state, input1: (state.input1? parseInt(state.input1)*-1:"").toString()};
 			}
 		case "CALCULATE_RESULT":
 			return {...state, result: calculate(state.input1, state.input2, state.operator)};

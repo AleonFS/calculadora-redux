@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './App.css';
 import {connect} from "react-redux";
-import {calculateResult, clear, numberClick, operatorClick, updateInput1, updateInput2} from "./store";
+import {calculateResult, changeSymbol, clear, numberClick, operatorClick, updateInput1, updateInput2} from "./store";
 
 class App extends Component {
 
@@ -37,6 +37,10 @@ class App extends Component {
 					<Button id="calculate" onClick={() => this.props.calculateResult()}>=</Button>
 					<Button onClick={() => this.props.setOperator('/')}>/</Button>
 				</div>
+				<div className="row">
+					<Button onClick={() => this.props.setOperator('%')}>%</Button>
+					<Button onClick={() => this.props.changeSymbol()}>+/-</Button>
+				</div>
 			</div>
 		);
 	}
@@ -63,7 +67,8 @@ const mapDispatchToProps = {
 	setOperator: operatorClick,
 	onNumberPress: numberClick,
 	clear,
-	calculateResult
+	calculateResult,
+	changeSymbol
 };
 
 export const AppConnected = connect(mapStateToProps, mapDispatchToProps)(App);
