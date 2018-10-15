@@ -56,9 +56,9 @@ export const calculatorReducer = (state = {}, action) => {
 			return {...state, operator: action.op};
 		case "NUMBER_CLICK":
 			if (state.operator) {
-				return {...state, input2: state.input2 + action.number};
+				return {...state, input2: (state.input2?state.input2:"") + action.num};
 			} else {
-				return {...state, input1: state.input1 + action.number};
+				return {...state, input1: (state.input1 ? state.input1:"") + action.num};
 			}
 		case "CALCULATE_RESULT":
 			return {...state, result: calculate(state.input1, state.input2, state.operator)};

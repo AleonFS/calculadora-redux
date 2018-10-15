@@ -40,11 +40,79 @@ describe('reducer suite', () => {
 		expect(calculatorReducer(initialState, clear())).toEqual({});
 	});
 
-	it('should calculate valid operation', () => {
+	it('should calculate valid + operation', () => {
 		const initialState = {input1: "2", input2: "5", operator: '+'};
 		expect(calculatorReducer(initialState, calculateResult())).toEqual(
 			{input1: "2", input2: "5", operator: '+', result: 7}
 		);
+	});
+
+	it('should calculate valid - operation', () => {
+		const initialState = {input1: "2", input2: "5", operator: '-'};
+		expect(calculatorReducer(initialState, calculateResult())).toEqual(
+			{input1: "2", input2: "5", operator: '-', result: -3}
+		);
+	});
+
+	it('should calculate valid * operation', () => {
+		const initialState = {input1: "2", input2: "5", operator: '*'};
+		expect(calculatorReducer(initialState, calculateResult())).toEqual(
+			{input1: "2", input2: "5", operator: '*', result: 10}
+		);
+	});
+
+	it('should calculate valid / operation', () => {
+		const initialState = {input1: "6", input2: "2", operator: '/'};
+		expect(calculatorReducer(initialState, calculateResult())).toEqual(
+			{input1: "6", input2: "2", operator: '/', result: 3}
+		);
+	});
+
+	it('should calculate valid unkown operation', () => {
+		const initialState = {input1: "6", input2: "2", operator: '&'};
+		expect(calculatorReducer(initialState, calculateResult())).toEqual(
+			{input1: "6", input2: "2", operator: '&', result: 0}
+		);
+	});
+
+	it('should concat second number after click a number pad', () => {
+		const initialState = {input1: "2"};
+		expect(calculatorReducer(initialState, numberClick("4"))).toEqual({input1: "24"});
+	});
+
+	it('should modify second value after enter a operator', () => {
+		const initialState = {input1: "2", operator: "+"};
+		expect(calculatorReducer(initialState, numberClick("4"))).toEqual({input1: "2", operator: "+", input2: "4"});
+	});
+
+	it('should modify second value after enter a operator', () => {
+		const initialState = {input1: "2", operator: "+"};
+		expect(calculatorReducer(initialState, numberClick("4"))).toEqual({input1: "2", operator: "+", input2: "4"});
+	});
+
+
+	it('should set operator', () => {
+		const initialState = {input1: "2"};
+		expect(calculatorReducer(initialState, operatorClick("/"))).toEqual({input1: "2", operator: "/"});
+	});
+
+	it('should set input1', () => {
+		const initialState = {input1: "2"};
+		expect(calculatorReducer(initialState, updateInput1("24"))).toEqual({input1: "24"});
+	});
+
+	it('should set input2', () => {
+		const initialState = {input1: "2"};
+		expect(calculatorReducer(initialState, updateInput2("24"))).toEqual({input1: "2", input2: "24"});
+	});
+
+	it('should return the same state with an unkown action', () => {
+		const initialState = {input1: "2"};
+		expect(calculatorReducer(initialState, {type: "usadfnasdlfown"})).toEqual({input1: "2"});
+	});
+
+	it('should a empty object as initial state', () => {
+		expect(calculatorReducer(undefined, {type: "usadfnasdlfown"})).toEqual({});
 	});
 
 });
