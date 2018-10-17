@@ -3,15 +3,24 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import {AppConnected} from './App';
 import registerServiceWorker from './registerServiceWorker';
-import {createStore} from "redux";
+import {applyMiddleware, createStore} from "redux";
 import {calculatorReducer} from "./store";
 import {Provider} from "react-redux";
+import {debounce, logger, saveToLocal, thunk} from "./middlewares";
 
 
-export const initialState = {input1: "", input2: "", result: "", operator: ""};
+let staticInitialState = {input1: "", input2: "", result: "", operator: ""};
+let localStorageState = JSON.parse(window.localStorage.getItem('app'));
+export const initialState = localStorageState || staticInitialState;
+
+
 const store = createStore(calculatorReducer,
 	initialState,
-	window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+	applyMiddleware(
+		debounce,
+		logger,
+		saveToLocal,
+		thunk)
 );
 
 ReactDOM.render(

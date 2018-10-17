@@ -1,8 +1,13 @@
 import {initialState} from "./index";
 
-export const clear = () => ({
-	type: "CLEAR"
-});
+/*export const clear = () => dispatch => {
+	const result = fetch('https://api.github.com/users/javidalpe')
+		.then(res => res.json())
+		.then(data => {dispatch({type: "UPDATE_INPUT_1", number: JSON.stringify(data)});}
+	)
+}*/
+
+export const clear = ()=> ({type: "CLEAR"});
 
 export const calculateResult = () => ({
 	type: 'CALCULATE_RESULT',
@@ -10,12 +15,12 @@ export const calculateResult = () => ({
 
 export const numberClick = num => ({
 	type: "NUMBER_CLICK",
-	num: num
+	num: num,
 });
 
 export const operatorClick = op => ({
 	type: "OPERATOR_CLICK",
-	op: op
+	op: op,
 });
 
 export const updateInput1 = numberString => ({
