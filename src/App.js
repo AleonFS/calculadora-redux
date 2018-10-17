@@ -3,7 +3,7 @@ import './App.css';
 import {connect} from "react-redux";
 import {calculateResult, changeSymbol, clear, numberClick, operatorClick, updateInput1, updateInput2} from "./store";
 
-class App extends Component {
+class AppNotConnected extends Component {
 
 	render() {
 		const operatorsIds = ['plus','subs','mul'];
@@ -26,20 +26,20 @@ class App extends Component {
 				{['+', '-', '*'].map((v, i) =>
 					<div className="row" key={i}>
 						{Array(3).fill(null).map((v, j) =>
-							<Button id={"btn" + (3 * i + j)} key={j} onClick={() => this.props.onNumberPress(3 * i + j)}>{3 * i + j}</Button>
+							<OwnButton id={"btn" + (3 * i + j)} key={j} onClick={() => this.props.onNumberPress(3 * i + j)} title={3 * i + j}/>
 						)}
-						<Button id={operatorsIds[i]} key={v} onClick={() => this.props.setOperator(v)}>{v}</Button>
+						<OwnButton id={operatorsIds[i]} key={v} onClick={() => this.props.setOperator(v)} title={v}/>
 					</div>
 				)}
 				<div className="row">
-					<Button onClick={() => this.props.onNumberPress(9)}>9</Button>
-					<Button onClick={() => this.props.clear()}>C</Button>
-					<Button id="calculate" onClick={() => this.props.calculateResult()}>=</Button>
-					<Button onClick={() => this.props.setOperator('/')}>/</Button>
+					<OwnButton onClick={() => this.props.onNumberPress(9)} title="9"/>
+					<OwnButton onClick={() => this.props.clear()} title="C"/>
+					<OwnButton id="calculate" onClick={() => this.props.calculateResult()} title="="/>
+					<OwnButton onClick={() => this.props.setOperator('/')} title="/"/>
 				</div>
 				<div className="row">
-					<Button onClick={() => this.props.setOperator('%')}>%</Button>
-					<Button onClick={() => this.props.changeSymbol()}>+/-</Button>
+					<OwnButton onClick={() => this.props.setOperator('%')} title="%"/>
+					<OwnButton onClick={() => this.props.changeSymbol()} title="+/-"/>
 				</div>
 			</div>
 		);
@@ -50,7 +50,7 @@ let operatorStyle = {width: 60, margin: 2, fontSize: 32, textAlign: "center"};
 let inputStyle = {width: 240, margin: 2, fontSize: 32};
 let buttonStyle = {height: 60, width: 60, fontSize: 32, margin: 2};
 
-const Button = props => <button style={buttonStyle} onClick={props.onClick}>{props.children}</button>
+const OwnButton = props => <button style={buttonStyle} onClick={props.onClick}>{props.title}</button>
 
 
 const mapStateToProps = state => ({
@@ -71,4 +71,4 @@ const mapDispatchToProps = {
 	changeSymbol
 };
 
-export const AppConnected = connect(mapStateToProps, mapDispatchToProps)(App);
+export const AppConnected = connect(mapStateToProps, mapDispatchToProps)(AppNotConnected);

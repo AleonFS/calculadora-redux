@@ -80,7 +80,7 @@ export const calculatorReducer = (state, action) => {
 				return {...state, input1: (state.input1? parseInt(state.input1)*-1:"").toString()};
 			}
 		case "CALCULATE_RESULT":
-			return {...state, result: calculate(state.input1, state.input2, state.operator)};
+			return {...state, result: calculate(state.input1, state.input2, state.operator).toString()};
 		default:
 			return state;
 	}
